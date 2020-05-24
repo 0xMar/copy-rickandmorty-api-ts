@@ -21,7 +21,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/[name].[hash].js',
-    publicPath: 'http://localhost:3001/',
+    publicPath: 'https://vigilant-lovelace-6f532b.netlify.app/',
     chunkFilename: 'js/[id].[chunkhash].js',
   },
   optimization: {
