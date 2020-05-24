@@ -16,12 +16,12 @@ const Container = styled.main`
 `;
 
 const App = () => {
-  const [searchInput, setSearchInput] = useState('');
-  const handleInputChange = useCallback((name) => {
-    if (name.length > 3) {
-      setSearchInput(name);
-    }
-  }, []);
+  // const [searchInput, setSearchInput] = useState('');
+  // const handleInputChange = useCallback((name) => {
+  //   if (name.length > 3) {
+  //     setSearchInput(name);
+  //   }
+  // }, []);
   return (
     <>
       <Header />

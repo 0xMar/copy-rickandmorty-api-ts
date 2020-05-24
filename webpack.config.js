@@ -7,10 +7,16 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TersetJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components')
+  .default;
+const styledComponentsTransformer = createStyledComponentsTransformer();
 
 module.exports = {
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
   entry: {
-    app: path.resolve(__dirname, 'src/index.js'),
+    app: path.resolve(__dirname, 'src/index.tsx'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -24,9 +30,24 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js | jsx | tsx | ts)$/,
         use: 'babel-loader',
         exclude: /node_modules/,
+      },
+      {
+        test: /\.(graphql|gql)$/,
+        loader: 'graphql-tag/loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.ts(x?)$/,
+        exclude: /node_modules/,
+        loader: 'ts-loader',
+        options: {
+          getCustomTransformers: () => ({
+            before: [styledComponentsTransformer],
+          }),
+        },
       },
       {
         test: /\.css$/,
