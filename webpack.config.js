@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -58,7 +59,7 @@ module.exports = {
       template: path.resolve(__dirname, 'public/index.html'),
     }),
     new webpack.DllReferencePlugin({
-      // manifest: require('./modules-manifest.json'),
+      manifest: require('./modules-manifest.json'),
     }),
     new AddAssetHtmlPlugin({
       filepath: path.resolve(__dirname, 'dist/js/*.dll.js'),

@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components')
+  .default;
+const styledComponentsTransformer = createStyledComponentsTransformer();
 
 module.exports = {
   resolve: {
@@ -24,14 +28,24 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js | jsx | tsx | ts)$/,
         use: ['babel-loader', 'eslint-loader'],
         exclude: /node_modules/,
       },
       {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
-        use: [{ loader: 'ts-loader' }, { loader: 'eslint-loader' }],
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              getCustomTransformers: () => ({
+                before: [styledComponentsTransformer],
+              }),
+            },
+          },
+          { loader: 'eslint-loader' },
+        ],
       },
       {
         test: /\.css$/,
@@ -59,4 +73,8 @@ module.exports = {
       template: path.resolve(__dirname, 'public/index.html'),
     }),
   ],
+  node: {
+    fs: 'empty',
+    module: 'empty',
+  },
 };

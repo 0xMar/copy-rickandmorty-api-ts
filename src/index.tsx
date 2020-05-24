@@ -1,9 +1,19 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import { render } from 'react-dom';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import App from './App';
 
-import { Hello } from './components/Hello';
+const client = new ApolloClient({
+  uri: 'https://rickandmortyapi.com/graphql',
+});
 
-ReactDOM.render(
-  <Hello compiler="TypeScript" framework="React" />,
-  document.getElementById('app')
+render(
+  <ApolloProvider client={client}>
+    <ApolloHooksProvider client={client}>
+      <App />
+    </ApolloHooksProvider>
+  </ApolloProvider>,
+  document.getElementById('app'),
 );
