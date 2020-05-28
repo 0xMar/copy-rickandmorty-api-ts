@@ -2,89 +2,93 @@ import styled from 'styled-components';
 
 export const Footer = styled.footer`
   display: flex;
-  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
   position: relative;
   width: 100%;
-  min-height: calc(120px);
+  min-height: calc(60px * 2);
   padding: 1.5rem 0px;
-  justify-content: center;
-  align-items: center;
-  color: rgb(158, 158, 158);
-  background: rgb(32, 35, 41) none repeat scroll 0% 0%;
-`;
-
-export const StatsList = styled.ul`
-  display: flex;
-  width: 100%;
-  margin: 0px;
-  padding: 0px;
-  align-items: center;
-  justify-content: center;
-  & li:not(:first-child) {
+  color: #9e9e9e;
+  background: #202329;
+  .margin-top {
+    margin-top: 1.25rem;
+  }
+  & ul li {
+    margin: 0px;
+  }
+  & ul li + li {
     margin-left: 1.5rem;
+  }
+  & ul li span {
+    margin: 0px;
   }
 `;
 
-export const StatsItem = styled.li`
+export const List = styled.ul`
+  display: flex;
+  width: 100%;
+  padding: 0px;
   margin: 0px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ListItem = styled.li`
+  .footer-icon {
+    vertical-align: middle;
+  }
   & span {
-    font-size: 0.75rem;
-    font-weight: 300;
-    text-align: center;
-    text-transform: uppercase;
+    margin: 0px;
+  }
+  & a {
+    color: #9e9e9e;
+    border-bottom: none;
+    & :hover,
+    & :focus {
+      color: #ff9800;
+    }
   }
 `;
 
 export const ServerStatus = styled.a`
   display: flex;
-  justify-content: center;
   align-items: center;
-  color: rgb(158, 158, 158);
-  & span {
-    margin: 0.25rem 0.5rem;
-    font-size: 0.75rem;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 300;
+  justify-content: center;
+  color: #9e9e9e;
+  .stats {
+    margin-left: 0px;
   }
-  & span:last-child {
+  .server-icon {
     height: 0.5rem;
     width: 0.5rem;
     border-radius: 50%;
-    background: rgb(85, 204, 68) none repeat scroll 0% 0%;
-  }
-`;
-
-export const SocialList = styled.ul`
-  display: flex;
-  width: 100%;
-  margin: 0px;
-  margin-top: 1.25rem;
-  padding: 0px;
-  align-items: center;
-  justify-content: center;
-  & li:not(:first-child) {
-    margin-left: 1.5rem;
-  }
-  & li > a {
-    color: rgb(158, 158, 158);
-    border-bottom: medium none;
-    & svg {
-      width: 1em;
-      height: 1em;
-      vertical-align: middle;
-      fill: currentColor;
-    }
+    background: #55cc44;
   }
 `;
 
 export const SignWrapper = styled.div`
   & span {
     font-size: 0.75rem;
-    & a {
-      font-weight: 400;
-      color: rgb(245, 245, 245);
-      border-bottom: 1px solid rgb(255, 152, 0);
-    }
   }
+  & span a {
+    font-weight: 400;
+    transition: color 0.2s;
+    color: #f5f5f5;
+    border-bottom: 1px solid #ff9800;
+  }
+  & span a:hover,
+  span a:focus {
+    color: #ff9800;
+    border-bottom: none;
+  }
+`;
+
+export const Caption = styled.span`
+  margin: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 300;
 `;

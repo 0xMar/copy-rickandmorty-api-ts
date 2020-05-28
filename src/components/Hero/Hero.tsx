@@ -1,7 +1,7 @@
 import React from 'react';
 import { Wrapper, Title, Image } from './styles';
 
-const Hero = () => (
+const Hero: React.FC = () => (
   <Wrapper>
     <Title>The Rick and Morty API</Title>
     <Image>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 
-const HeaderContainer = () => {
+const HeaderContainer: React.FC = () => {
   return <Header />;
 };
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import Hero from './Hero';
 
-const HeroContainer = () => {
-  return <Hero />;
-};
+const HeroContainer: React.FC = () => <Hero />;
 
 export default HeroContainer;

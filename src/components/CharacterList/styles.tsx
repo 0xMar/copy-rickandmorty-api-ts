@@ -2,17 +2,20 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.section`
   display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 4.5rem 0px;
-  background: rgb(32, 35, 41) none repeat scroll 0% 0%;
-  min-height: calc(-60px + 50vh);
+  align-items: center;
+  justify-content: center;
+  background: #202329;
+  min-height: calc(50vh - 60px);
+  @media (max-width: 40.625em) {
+    padding: 1.5rem;
+  }
 `;
 
 export const Inner = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   max-width: 1920px;
 `;

@@ -6,14 +6,13 @@ interface Props {
   data: CharacterListQuery;
 }
 
-const CardProfile = ({ data }: Props) => {
+const CardProfile: React.FC<Props> = ({ data }: Props) => {
   const result = data?.characters?.results || [];
   try {
     return (
       <>
         {result.map((character) => (
           <Card key={character?.id || ''}>
-            {console.log(character?.episode?.length)}
             <ImageWrapper>
               <img src={character?.image || ''} />
             </ImageWrapper>

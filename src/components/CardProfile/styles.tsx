@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 const textGray = '#9e9e9e';
@@ -9,6 +10,10 @@ const Status = [
   { status: 'unknown', value: '#9e9e9e' },
 ];
 
+interface ContentWrapperProps {
+  state: string;
+}
+
 export const Card = styled.article`
   width: 600px;
   height: 220px;
@@ -19,6 +24,11 @@ export const Card = styled.article`
   border-radius: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  @media (max-width: 40.625em) {
+    width: 100%;
+    height: initial;
+    flex-direction: column;
+  }
 `;
 
 export const ImageWrapper = styled.div`
@@ -32,10 +42,13 @@ export const ImageWrapper = styled.div`
     transition: opacity 0.5s ease 0s;
     object-position: center center;
     object-fit: cover;
+    @media (max-width: 40.625em) {
+      height: 300px;
+    }
   }
 `;
 
-export const ContentWrapper = styled.div<{ state: string }>`
+export const ContentWrapper = styled.div<ContentWrapperProps>`
   display: flex;
   flex-direction: column;
   flex: 3 1 0%;
@@ -52,7 +65,7 @@ export const ContentWrapper = styled.div<{ state: string }>`
         height: 0.5rem;
         width: 0.5rem;
         margin-right: 0.375rem;
-        background: ${(props) =>
+        background: ${(props: ContentWrapperProps): string | undefined =>
             Status.find((item) =>
               item.status === props.state ? item.value : '',
             )?.value}
@@ -63,10 +76,19 @@ export const ContentWrapper = styled.div<{ state: string }>`
   }
   & div:nth-child(2) {
     color: ${textGray};
+    @media (max-width: 40.625em) {
+      margin-top: 1.25rem;
+    }
   }
   & div:last-child {
     justify-content: flex-end;
     color: ${textGray};
+    @media (max-width: 40.625em) {
+      margin-top: 1.25rem;
+    }
+  }
+  @media (max-width: 40.625em) {
+    pointer-events: none;
   }
 `;
 

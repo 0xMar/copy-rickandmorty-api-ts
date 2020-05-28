@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import styled from 'styled-components';
 import CharacterList from './components/CharacterList';
 import CharacterProfile from './components/CharacterProfile';
 import SearchCharacter from './components/SearchCharacter';
@@ -8,14 +9,11 @@ import Hero from './components/Hero';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-import styled from 'styled-components';
-import { GlobalStyle } from './globalStyles';
-
 const Container = styled.main`
-  background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+  padding-top: 2px;
 `;
 
-const App = () => {
+const App: React.FC = () => {
   // const [searchInput, setSearchInput] = useState('');
   // const handleInputChange = useCallback((name) => {
   //   if (name.length > 3) {
@@ -32,7 +30,6 @@ const App = () => {
         </CharacterList>
       </Container>
       <Footer />
-      <GlobalStyle />
     </>
   );
 };
