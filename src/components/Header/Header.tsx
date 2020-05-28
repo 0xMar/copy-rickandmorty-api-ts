@@ -18,17 +18,26 @@ const Header: React.FC = () => (
       </AnchorItem>
       <HeaderList>
         <li>
-          <AnchorItem href="/" className="nav-item__primary nav-item">
+          <AnchorItem
+            href="https://vigilant-lovelace-6f532b.netlify.app"
+            className="nav-item__primary nav-item"
+          >
             Docs
           </AnchorItem>
         </li>
         <li>
-          <AnchorItem href="/" className="nav-item__primary nav-item">
+          <AnchorItem
+            href="https://vigilant-lovelace-6f532b.netlify.app"
+            className="nav-item__primary nav-item"
+          >
             About
           </AnchorItem>
         </li>
         <li>
-          <AnchorItem href="/" className="nav-item">
+          <AnchorItem
+            href="https://vigilant-lovelace-6f532b.netlify.app"
+            className="nav-item"
+          >
             <HeaderButton className="desktop nav-item">help us</HeaderButton>
             <HeaderButtonMobile className="mobile nav-item">
               <svg
