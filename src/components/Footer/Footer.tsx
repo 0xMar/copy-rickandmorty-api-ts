@@ -36,6 +36,7 @@ const Footer: React.FC<Props> = ({ data }: Props) => (
           href="https://github.com/victormartinortiz"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Github"
         >
           <svg
             className="footer-icon"
@@ -55,6 +56,7 @@ const Footer: React.FC<Props> = ({ data }: Props) => (
           href="https://twitter.com/OrtizVictorM"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Twitter"
         >
           <svg
             className="footer-icon"
@@ -70,7 +72,12 @@ const Footer: React.FC<Props> = ({ data }: Props) => (
         </a>
       </ListItem>
       <ListItem>
-        <a href="http://" target="_blank" rel="noopener noreferrer">
+        <a
+          href="http://"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Help"
+        >
           <svg
             className="footer-icon"
             stroke="currentColor"
