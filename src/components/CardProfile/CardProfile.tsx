@@ -11,7 +11,7 @@ const CardProfile: React.FC<Props> = ({ data }: Props) => {
   try {
     return (
       <>
-        {result.map((character) => (
+        {result.slice(0, 6).map((character) => (
           <Card key={character?.id || ''}>
             <ImageWrapper>
               <img src={character?.image || ''} alt={character?.name || ''} />
