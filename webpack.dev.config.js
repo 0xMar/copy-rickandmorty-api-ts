@@ -13,12 +13,7 @@ module.exports = {
   entry: {
     app: path.resolve(__dirname, 'src/index.tsx'),
   },
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'js/[name].js',
-    publicPath: 'http://localhost:9001/',
-    chunkFilename: 'js/[id].[chunkhash].js',
-  },
+  devtool: 'inline-source-map',
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     open: true,
@@ -28,13 +23,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js | jsx | tsx | ts)$/,
-        use: ['babel-loader', 'eslint-loader'],
-        exclude: /node_modules/,
-      },
-      {
         test: /\.ts(x?)$/,
-        exclude: /node_modules/,
         use: [
           {
             loader: 'ts-loader',
@@ -47,24 +36,11 @@ module.exports = {
           { loader: 'eslint-loader' },
         ],
       },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.jpg|png|gif|woff|eot|ttf|svg|mp4|webm$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            outputPath: 'assets/',
-          },
-        },
-      },
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        loader: 'source-map-loader',
-      },
+      // {
+      //   enforce: 'pre',
+      //   test: /\.js$/,
+      //   loader: 'source-map-loader',
+      // },
     ],
   },
   plugins: [
@@ -76,5 +52,11 @@ module.exports = {
   node: {
     fs: 'empty',
     module: 'empty',
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'js/[name].js',
+    publicPath: '/',
+    chunkFilename: 'js/[id].[chunkhash].js',
   },
 };

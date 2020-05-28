@@ -1,22 +1,31 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.section`
-  height: calc(-60px + 50vh);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  position: relative;
+  height: calc(50vh - 60px);
   text-align: center;
+  position: relative;
+  @media (max-width: 40.625em) {
+    padding: 0px 1.25rem;
+  }
 `;
 
 export const Title = styled.h1`
   margin: 0px;
   font-size: 5rem;
   font-weight: 900;
-  border: medium none;
-  color: rgb(32, 35, 41);
+  border: none;
+  color: #202329;
   z-index: 1;
+  @media (max-width: 55.625em) {
+    font-size: 3.75rem;
+  }
+  @media (max-width: 40.625em) {
+    font-size: 3.125rem;
+  }
 `;
 
 export const Image = styled.div`

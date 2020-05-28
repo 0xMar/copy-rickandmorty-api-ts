@@ -4,7 +4,7 @@ export interface OwnProps {
   children: ReactElement;
 }
 
-const CharacterList = ({ children }: OwnProps) => (
+const CharacterList: React.FC<OwnProps> = ({ children }: OwnProps) => (
   <Wrapper>
     <Inner>{children}</Inner>
   </Wrapper>

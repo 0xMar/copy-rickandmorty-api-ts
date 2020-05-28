@@ -2,7 +2,7 @@ import React from 'react';
 import { useStaticsQuery } from '../../generated/graphql';
 import Footer from './Footer';
 
-const FooterContainer = () => {
+const FooterContainer: React.FC = () => {
   const { data, error, loading } = useStaticsQuery();
   if (loading) {
     return <></>;

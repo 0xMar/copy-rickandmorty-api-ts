@@ -4,6 +4,7 @@ import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactComponents from '@apollo/react-components';
 import * as ApolloReactHoc from '@apollo/react-hoc';
 import * as ApolloReactHooks from '@apollo/react-hooks';
+import { QueryResult } from '@apollo/react-common';
 export type Maybe<T> = T | null;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
@@ -175,7 +176,7 @@ export enum CacheControlScope {
   Private = 'PRIVATE',
 }
 
-export type CharacterListQueryVariables = {};
+export type CharacterListQueryVariables = Record<string, unknown>;
 
 export type CharacterListQuery = { __typename?: 'Query' } & {
   characters?: Maybe<
@@ -224,7 +225,7 @@ export type CharacterProfileQuery = { __typename?: 'Query' } & {
   >;
 };
 
-export type StaticsQueryVariables = {};
+export type StaticsQueryVariables = Record<string, unknown>;
 
 export type StaticsQuery = { __typename?: 'Query' } & {
   characters?: Maybe<
@@ -271,7 +272,9 @@ export type CharacterListComponentProps = Omit<
   'query'
 >;
 
-export const CharacterListComponent = (props: CharacterListComponentProps) => (
+export const CharacterListComponent: React.FC<CharacterListComponentProps> = (
+  props: CharacterListComponentProps,
+) => (
   <ApolloReactComponents.Query<CharacterListQuery, CharacterListQueryVariables>
     query={CharacterListDocument}
     {...props}
@@ -279,7 +282,7 @@ export const CharacterListComponent = (props: CharacterListComponentProps) => (
 );
 
 export type CharacterListProps<
-  TChildProps = {},
+  TChildProps = Record<string, unknown>,
   TDataName extends string = 'data'
 > = {
   [key in TDataName]: ApolloReactHoc.DataValue<
@@ -290,7 +293,7 @@ export type CharacterListProps<
   TChildProps;
 export function withCharacterList<
   TProps,
-  TChildProps = {},
+  TChildProps = Record<string, unknown>,
   TDataName extends string = 'data'
 >(
   operationOptions?: ApolloReactHoc.OperationOption<
@@ -377,7 +380,7 @@ export type CharacterProfileComponentProps = Omit<
   'query'
 >;
 
-export const CharacterProfileComponent = (
+export const CharacterProfileComponent: React.FC<CharacterListComponentProps> = (
   props: CharacterProfileComponentProps,
 ) => (
   <ApolloReactComponents.Query<
@@ -390,7 +393,7 @@ export const CharacterProfileComponent = (
 );
 
 export type CharacterProfileProps<
-  TChildProps = {},
+  TChildProps = Record<string, unknown>,
   TDataName extends string = 'data'
 > = {
   [key in TDataName]: ApolloReactHoc.DataValue<
@@ -401,7 +404,7 @@ export type CharacterProfileProps<
   TChildProps;
 export function withCharacterProfile<
   TProps,
-  TChildProps = {},
+  TChildProps = Record<string, unknown>,
   TDataName extends string = 'data'
 >(
   operationOptions?: ApolloReactHoc.OperationOption<
@@ -497,7 +500,9 @@ export type StaticsComponentProps = Omit<
   'query'
 >;
 
-export const StaticsComponent = (props: StaticsComponentProps) => (
+export const StaticsComponent: React.FC<StaticsComponentProps> = (
+  props: StaticsComponentProps,
+) => (
   <ApolloReactComponents.Query<StaticsQuery, StaticsQueryVariables>
     query={StaticsDocument}
     {...props}
@@ -505,7 +510,7 @@ export const StaticsComponent = (props: StaticsComponentProps) => (
 );
 
 export type StaticsProps<
-  TChildProps = {},
+  TChildProps = Record<string, unknown>,
   TDataName extends string = 'data'
 > = {
   [key in TDataName]: ApolloReactHoc.DataValue<
@@ -516,7 +521,7 @@ export type StaticsProps<
   TChildProps;
 export function withStatics<
   TProps,
-  TChildProps = {},
+  TChildProps = Record<string, unknown>,
   TDataName extends string = 'data'
 >(
   operationOptions?: ApolloReactHoc.OperationOption<
