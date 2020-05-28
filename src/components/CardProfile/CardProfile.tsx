@@ -1,6 +1,5 @@
 import React from 'react';
 import { CharacterListQuery } from '../../generated/graphql';
-
 import { Card, ImageWrapper, ContentWrapper, Section } from './styles';
 interface Props {
   data: CharacterListQuery;
@@ -34,11 +33,6 @@ const CardProfile: React.FC<Props> = ({ data }: Props) => {
                 <span>First seen in:</span>
                 <a href="">
                   {character?.episode ? character?.episode[0]?.name : ''}
-                  {/* {character?.episode
-                    ? character?.episode?.length > 1
-                      ? character?.episode[character.episode?.length - 1]?.name
-                      : character?.episode[0]?.name
-                    : ''} */}
                 </a>
               </Section>
             </ContentWrapper>

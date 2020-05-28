@@ -3,10 +3,8 @@ const path = require('path');
 const webpack = require('webpack');
 const TersetJSPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 //   .BundleAnalyzerPlugin;
 
@@ -18,10 +16,10 @@ module.exports = {
     app: path.resolve(__dirname, 'src/index.tsx'),
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
     filename: 'js/[name].[hash].js',
-    publicPath: 'https://vigilant-lovelace-6f532b.netlify.app/',
     chunkFilename: 'js/[id].[chunkhash].js',
+    publicPath: 'https://vigilant-lovelace-6f532b.netlify.app/',
+    path: path.resolve(__dirname, 'dist'),
   },
   optimization: {
     minimize: true,
@@ -33,7 +31,6 @@ module.exports = {
           ecma: 6,
         },
       }),
-      new OptimizeCSSAssetsPlugin(),
     ],
   },
   module: {
@@ -56,34 +53,10 @@ module.exports = {
           getCustomTransformers: path.join(__dirname, 'transformer.js'),
         },
       },
-      // {
-      //   test: /\.css$/,
-      //   use: [
-      //     {
-      //       loader: MiniCssExtractPlugin.loader,
-      //     },
-      //     'css-loader',
-      //   ],
-      // },
-      // {
-      //   test: /\.jpg|png|gif|woff|eot|ttf|svg|mp4|webm$/,
-      //   use: {
-      //     loader: 'url-loader',
-      //     options: {
-      //       limit: 1000,
-      //       name: '[hash].[ext]',
-      //       outputPath: 'assets',
-      //     },
-      //   },
-      // },
     ],
   },
   plugins: [
     // new BundleAnalyzerPlugin(),
-    // new MiniCssExtractPlugin({
-    //   filename: 'css/[name].[hash].css',
-    //   chunkFilename: 'css/[id].[hash].css',
-    // }),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['**/app.*'],
     }),

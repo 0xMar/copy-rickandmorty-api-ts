@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const textGray = '#9e9e9e';
@@ -113,8 +112,4 @@ export const Section = styled.div`
     font-size: 16px;
     font-weight: 500;
   }
-`;
-
-export const LoadIcon = styled.svg`
-  fill: rgb(255, 152, 0);
 `;
