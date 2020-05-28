@@ -9,7 +9,13 @@ module.exports = {
     modules: ['react', 'react-dom', 'react-router-dom'],
   },
   optimization: {
-    minimizer: [new TersetJSPlugin(), new OptimizeCSSAssetsPlugin()],
+    minimize: true,
+    minimizer: [
+      new TersetJSPlugin({
+        extractComments: true,
+      }),
+      new OptimizeCSSAssetsPlugin(),
+    ],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

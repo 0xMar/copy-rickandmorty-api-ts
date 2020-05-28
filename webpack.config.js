@@ -7,9 +7,6 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TersetJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const createStyledComponentsTransformer = require('typescript-plugin-styled-components')
-  .default;
-const styledComponentsTransformer = createStyledComponentsTransformer();
 
 module.exports = {
   resolve: {
@@ -25,7 +22,17 @@ module.exports = {
     chunkFilename: 'js/[id].[chunkhash].js',
   },
   optimization: {
-    minimizer: [new TersetJSPlugin(), new OptimizeCSSAssetsPlugin()],
+    minimize: true,
+    minimizer: [
+      new TersetJSPlugin({
+        extractComments: true,
+        parallel: true,
+        terserOptions: {
+          ecma: 6,
+        },
+      }),
+      new OptimizeCSSAssetsPlugin(),
+    ],
   },
   module: {
     rules: [
@@ -44,9 +51,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'ts-loader',
         options: {
-          getCustomTransformers: () => ({
-            before: [styledComponentsTransformer],
-          }),
+          getCustomTransformers: path.join(__dirname, 'transformer.js'),
         },
       },
       {
@@ -58,17 +63,17 @@ module.exports = {
           'css-loader',
         ],
       },
-      {
-        test: /\.jpg|png|gif|woff|eot|ttf|svg|mp4|webm$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 1000,
-            name: '[hash].[ext]',
-            outputPath: 'assets',
-          },
-        },
-      },
+      // {
+      //   test: /\.jpg|png|gif|woff|eot|ttf|svg|mp4|webm$/,
+      //   use: {
+      //     loader: 'url-loader',
+      //     options: {
+      //       limit: 1000,
+      //       name: '[hash].[ext]',
+      //       outputPath: 'assets',
+      //     },
+      //   },
+      // },
     ],
   },
   plugins: [
