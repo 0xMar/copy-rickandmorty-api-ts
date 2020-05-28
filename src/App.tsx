@@ -1,11 +1,8 @@
-import React, { useState, useCallback } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import CharacterList from './components/CharacterList';
-import CharacterProfile from './components/CharacterProfile';
-import SearchCharacter from './components/SearchCharacter';
 import CardProfile from './components/CardProfile';
-import Hero from './components/Hero';
+import Hero from './components/Hero/Hero';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
