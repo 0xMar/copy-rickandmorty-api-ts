@@ -6,7 +6,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   entry: {
-    modules: ['react', 'react-dom', 'react-router-dom'],
+    modules: ['react', 'react-dom', 'react-apollo-hooks'],
   },
   optimization: {
     minimize: true,
