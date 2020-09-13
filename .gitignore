@@ -72,3 +72,7 @@ typings/
 .cache/
 dist/
 yarn-error.log
+
+#DockerFile
+build/*
+.dockerignore
