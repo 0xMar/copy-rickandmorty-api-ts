@@ -5,7 +5,7 @@ export const Wrapper = styled.section`
   padding: 4.5rem 0px;
   align-items: center;
   justify-content: center;
-  background: #202329;
+  background: rgb(36, 40, 47);
   min-height: calc(50vh - 60px);
   @media (max-width: 40.625em) {
     padding: 1.5rem;
