@@ -66,7 +66,7 @@ module.exports = {
     new AddAssetHtmlPlugin({
       filepath: path.resolve(__dirname, 'dist/js/*.dll.js'),
       outputPath: 'js',
-      publicPath: 'https://vigilant-lovelace-6f532b.netlify.app/',
+      publicPath: 'https://vigilant-lovelace-6f532b.netlify.app/js/',
     }),
   ],
 };
