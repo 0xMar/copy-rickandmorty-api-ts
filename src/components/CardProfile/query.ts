@@ -14,6 +14,7 @@ export const QUERY_CHARACTER_LIST = gql`
         }
         episode {
           name
+          id
         }
       }
     }

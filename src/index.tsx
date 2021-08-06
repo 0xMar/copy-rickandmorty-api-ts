@@ -1,19 +1,21 @@
 import React from 'react';
 import { render } from 'react-dom';
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
-import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import {
+  ApolloClient,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 import App from './App';
 
-const client = new ApolloClient({
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   uri: 'https://rickandmortyapi.com/graphql',
+  cache: new InMemoryCache(),
 });
 
 render(
   <ApolloProvider client={client}>
-    <ApolloHooksProvider client={client}>
-      <App />
-    </ApolloHooksProvider>
+    <App />
   </ApolloProvider>,
   document.getElementById('app'),
 );

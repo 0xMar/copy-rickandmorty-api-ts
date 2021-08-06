@@ -15,7 +15,7 @@ export const Wrapper = styled.section`
 
 export const Title = styled.h1`
   margin: 0px;
-  font-size: 5rem;
+  font-size: 5.625rem;
   font-weight: 900;
   border: none;
   color: #202329;

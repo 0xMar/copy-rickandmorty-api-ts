@@ -1,12 +1,15 @@
-import gql from 'graphql-tag';
-import * as React from 'react';
-import * as ApolloReactCommon from '@apollo/react-common';
-import * as ApolloReactComponents from '@apollo/react-components';
-import * as ApolloReactHoc from '@apollo/react-hoc';
-import * as ApolloReactHooks from '@apollo/react-hooks';
-import { QueryResult } from '@apollo/react-common';
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -15,51 +18,13 @@ export type Scalars = {
   Int: number;
   Float: number;
   /** The `Upload` scalar type represents a file upload. */
-  // Upload: any;
+  Upload: unknown;
 };
 
-export type Query = {
-  __typename?: 'Query';
-  /** Get a specific character by ID */
-  character?: Maybe<Character>;
-  /** Get the list of all characters */
-  characters?: Maybe<Characters>;
-  /** Get a specific locations by ID */
-  location?: Maybe<Location>;
-  /** Get the list of all locations */
-  locations?: Maybe<Locations>;
-  /** Get a specific episode by ID */
-  episode?: Maybe<Episode>;
-  /** Get the list of all episodes */
-  episodes?: Maybe<Episodes>;
-};
-
-export type QueryCharacterArgs = {
-  id?: Maybe<Scalars['ID']>;
-};
-
-export type QueryCharactersArgs = {
-  page?: Maybe<Scalars['Int']>;
-  filter?: Maybe<FilterCharacter>;
-};
-
-export type QueryLocationArgs = {
-  id?: Maybe<Scalars['ID']>;
-};
-
-export type QueryLocationsArgs = {
-  page?: Maybe<Scalars['Int']>;
-  filter?: Maybe<FilterLocation>;
-};
-
-export type QueryEpisodeArgs = {
-  id?: Maybe<Scalars['ID']>;
-};
-
-export type QueryEpisodesArgs = {
-  page?: Maybe<Scalars['Int']>;
-  filter?: Maybe<FilterEpisode>;
-};
+export enum CacheControlScope {
+  Public = 'PUBLIC',
+  Private = 'PRIVATE',
+}
 
 export type Character = {
   __typename?: 'Character';
@@ -85,25 +50,15 @@ export type Character = {
    */
   image?: Maybe<Scalars['String']>;
   /** Episodes in which this character appeared. */
-  episode?: Maybe<Array<Maybe<Episode>>>;
+  episode: Array<Maybe<Episode>>;
   /** Time at which the character was created in the database. */
   created?: Maybe<Scalars['String']>;
 };
 
-export type Location = {
-  __typename?: 'Location';
-  /** The id of the location. */
-  id?: Maybe<Scalars['ID']>;
-  /** The name of the location. */
-  name?: Maybe<Scalars['String']>;
-  /** The type of the location. */
-  type?: Maybe<Scalars['String']>;
-  /** The dimension in which the location is located. */
-  dimension?: Maybe<Scalars['String']>;
-  /** List of characters who have been last seen in the location. */
-  residents?: Maybe<Array<Maybe<Character>>>;
-  /** Time at which the location was created in the database. */
-  created?: Maybe<Scalars['String']>;
+export type Characters = {
+  __typename?: 'Characters';
+  info?: Maybe<Info>;
+  results?: Maybe<Array<Maybe<Character>>>;
 };
 
 export type Episode = {
@@ -117,9 +72,15 @@ export type Episode = {
   /** The code of the episode. */
   episode?: Maybe<Scalars['String']>;
   /** List of characters who have been seen in the episode. */
-  characters?: Maybe<Array<Maybe<Character>>>;
+  characters: Array<Maybe<Character>>;
   /** Time at which the episode was created in the database. */
   created?: Maybe<Scalars['String']>;
+};
+
+export type Episodes = {
+  __typename?: 'Episodes';
+  info?: Maybe<Info>;
+  results?: Maybe<Array<Maybe<Episode>>>;
 };
 
 export type FilterCharacter = {
@@ -130,10 +91,15 @@ export type FilterCharacter = {
   gender?: Maybe<Scalars['String']>;
 };
 
-export type Characters = {
-  __typename?: 'Characters';
-  info?: Maybe<Info>;
-  results?: Maybe<Array<Maybe<Character>>>;
+export type FilterEpisode = {
+  name?: Maybe<Scalars['String']>;
+  episode?: Maybe<Scalars['String']>;
+};
+
+export type FilterLocation = {
+  name?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  dimension?: Maybe<Scalars['String']>;
 };
 
 export type Info = {
@@ -148,10 +114,20 @@ export type Info = {
   prev?: Maybe<Scalars['Int']>;
 };
 
-export type FilterLocation = {
+export type Location = {
+  __typename?: 'Location';
+  /** The id of the location. */
+  id?: Maybe<Scalars['ID']>;
+  /** The name of the location. */
   name?: Maybe<Scalars['String']>;
+  /** The type of the location. */
   type?: Maybe<Scalars['String']>;
+  /** The dimension in which the location is located. */
   dimension?: Maybe<Scalars['String']>;
+  /** List of characters who have been last seen in the location. */
+  residents: Array<Maybe<Character>>;
+  /** Time at which the location was created in the database. */
+  created?: Maybe<Scalars['String']>;
 };
 
 export type Locations = {
@@ -160,23 +136,68 @@ export type Locations = {
   results?: Maybe<Array<Maybe<Location>>>;
 };
 
-export type FilterEpisode = {
-  name?: Maybe<Scalars['String']>;
-  episode?: Maybe<Scalars['String']>;
+export type Query = {
+  __typename?: 'Query';
+  /** Get a specific character by ID */
+  character?: Maybe<Character>;
+  /** Get the list of all characters */
+  characters?: Maybe<Characters>;
+  /** Get a list of characters selected by ids */
+  charactersByIds?: Maybe<Array<Maybe<Character>>>;
+  /** Get a specific locations by ID */
+  location?: Maybe<Location>;
+  /** Get the list of all locations */
+  locations?: Maybe<Locations>;
+  /** Get a list of locations selected by ids */
+  locationsByIds?: Maybe<Array<Maybe<Location>>>;
+  /** Get a specific episode by ID */
+  episode?: Maybe<Episode>;
+  /** Get the list of all episodes */
+  episodes?: Maybe<Episodes>;
+  /** Get a list of episodes selected by ids */
+  episodesByIds?: Maybe<Array<Maybe<Episode>>>;
 };
 
-export type Episodes = {
-  __typename?: 'Episodes';
-  info?: Maybe<Info>;
-  results?: Maybe<Array<Maybe<Episode>>>;
+export type QueryCharacterArgs = {
+  id: Scalars['ID'];
 };
 
-export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE',
-}
+export type QueryCharactersArgs = {
+  page?: Maybe<Scalars['Int']>;
+  filter?: Maybe<FilterCharacter>;
+};
 
-export type CharacterListQueryVariables = Record<string, unknown>;
+export type QueryCharactersByIdsArgs = {
+  ids: Array<Scalars['ID']>;
+};
+
+export type QueryLocationArgs = {
+  id: Scalars['ID'];
+};
+
+export type QueryLocationsArgs = {
+  page?: Maybe<Scalars['Int']>;
+  filter?: Maybe<FilterLocation>;
+};
+
+export type QueryLocationsByIdsArgs = {
+  ids: Array<Scalars['ID']>;
+};
+
+export type QueryEpisodeArgs = {
+  id: Scalars['ID'];
+};
+
+export type QueryEpisodesArgs = {
+  page?: Maybe<Scalars['Int']>;
+  filter?: Maybe<FilterEpisode>;
+};
+
+export type QueryEpisodesByIdsArgs = {
+  ids: Array<Scalars['ID']>;
+};
+
+export type CharacterListQueryVariables = Exact<{ [key: string]: never }>;
 
 export type CharacterListQuery = { __typename?: 'Query' } & {
   characters?: Maybe<
@@ -191,9 +212,9 @@ export type CharacterListQuery = { __typename?: 'Query' } & {
                 location?: Maybe<
                   { __typename?: 'Location' } & Pick<Location, 'name'>
                 >;
-                episode?: Maybe<
-                  Array<
-                    Maybe<{ __typename?: 'Episode' } & Pick<Episode, 'name'>>
+                episode: Array<
+                  Maybe<
+                    { __typename?: 'Episode' } & Pick<Episode, 'name' | 'id'>
                   >
                 >;
               }
@@ -204,28 +225,7 @@ export type CharacterListQuery = { __typename?: 'Query' } & {
   >;
 };
 
-export type CharacterProfileQueryVariables = {
-  name?: Maybe<Scalars['String']>;
-};
-
-export type CharacterProfileQuery = { __typename?: 'Query' } & {
-  characters?: Maybe<
-    { __typename?: 'Characters' } & {
-      results?: Maybe<
-        Array<
-          Maybe<
-            { __typename?: 'Character' } & Pick<
-              Character,
-              'id' | 'name' | 'image'
-            >
-          >
-        >
-      >;
-    }
-  >;
-};
-
-export type StaticsQueryVariables = Record<string, unknown>;
+export type StaticsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type StaticsQuery = { __typename?: 'Query' } & {
   characters?: Maybe<
@@ -259,60 +259,12 @@ export const CharacterListDocument = gql`
         }
         episode {
           name
+          id
         }
       }
     }
   }
 `;
-export type CharacterListComponentProps = Omit<
-  ApolloReactComponents.QueryComponentOptions<
-    CharacterListQuery,
-    CharacterListQueryVariables
-  >,
-  'query'
->;
-
-export const CharacterListComponent: React.FC<CharacterListComponentProps> = (
-  props: CharacterListComponentProps,
-) => (
-  <ApolloReactComponents.Query<CharacterListQuery, CharacterListQueryVariables>
-    query={CharacterListDocument}
-    {...props}
-  />
-);
-
-export type CharacterListProps<
-  TChildProps = Record<string, unknown>,
-  TDataName extends string = 'data'
-> = {
-  [key in TDataName]: ApolloReactHoc.DataValue<
-    CharacterListQuery,
-    CharacterListQueryVariables
-  >;
-} &
-  TChildProps;
-export function withCharacterList<
-  TProps,
-  TChildProps = Record<string, unknown>,
-  TDataName extends string = 'data'
->(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    CharacterListQuery,
-    CharacterListQueryVariables,
-    CharacterListProps<TChildProps, TDataName>
-  >,
-) {
-  return ApolloReactHoc.withQuery<
-    TProps,
-    CharacterListQuery,
-    CharacterListQueryVariables,
-    CharacterListProps<TChildProps, TDataName>
-  >(CharacterListDocument, {
-    alias: 'characterList',
-    ...operationOptions,
-  });
-}
 
 /**
  * __useCharacterListQuery__
@@ -330,26 +282,28 @@ export function withCharacterList<
  * });
  */
 export function useCharacterListQuery(
-  baseOptions?: ApolloReactHooks.QueryHookOptions<
+  baseOptions?: Apollo.QueryHookOptions<
     CharacterListQuery,
     CharacterListQueryVariables
   >,
 ) {
-  return ApolloReactHooks.useQuery<
-    CharacterListQuery,
-    CharacterListQueryVariables
-  >(CharacterListDocument, baseOptions);
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<CharacterListQuery, CharacterListQueryVariables>(
+    CharacterListDocument,
+    options,
+  );
 }
 export function useCharacterListLazyQuery(
-  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+  baseOptions?: Apollo.LazyQueryHookOptions<
     CharacterListQuery,
     CharacterListQueryVariables
   >,
 ) {
-  return ApolloReactHooks.useLazyQuery<
-    CharacterListQuery,
-    CharacterListQueryVariables
-  >(CharacterListDocument, baseOptions);
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<CharacterListQuery, CharacterListQueryVariables>(
+    CharacterListDocument,
+    options,
+  );
 }
 export type CharacterListQueryHookResult = ReturnType<
   typeof useCharacterListQuery
@@ -357,121 +311,9 @@ export type CharacterListQueryHookResult = ReturnType<
 export type CharacterListLazyQueryHookResult = ReturnType<
   typeof useCharacterListLazyQuery
 >;
-export type CharacterListQueryResult = ApolloReactCommon.QueryResult<
+export type CharacterListQueryResult = Apollo.QueryResult<
   CharacterListQuery,
   CharacterListQueryVariables
->;
-export const CharacterProfileDocument = gql`
-  query CharacterProfile($name: String) {
-    characters(filter: { name: $name }) {
-      results {
-        id
-        name
-        image
-      }
-    }
-  }
-`;
-export type CharacterProfileComponentProps = Omit<
-  ApolloReactComponents.QueryComponentOptions<
-    CharacterProfileQuery,
-    CharacterProfileQueryVariables
-  >,
-  'query'
->;
-
-export const CharacterProfileComponent: React.FC<CharacterListComponentProps> = (
-  props: CharacterProfileComponentProps,
-) => (
-  <ApolloReactComponents.Query<
-    CharacterProfileQuery,
-    CharacterProfileQueryVariables
-  >
-    query={CharacterProfileDocument}
-    {...props}
-  />
-);
-
-export type CharacterProfileProps<
-  TChildProps = Record<string, unknown>,
-  TDataName extends string = 'data'
-> = {
-  [key in TDataName]: ApolloReactHoc.DataValue<
-    CharacterProfileQuery,
-    CharacterProfileQueryVariables
-  >;
-} &
-  TChildProps;
-export function withCharacterProfile<
-  TProps,
-  TChildProps = Record<string, unknown>,
-  TDataName extends string = 'data'
->(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    CharacterProfileQuery,
-    CharacterProfileQueryVariables,
-    CharacterProfileProps<TChildProps, TDataName>
-  >,
-) {
-  return ApolloReactHoc.withQuery<
-    TProps,
-    CharacterProfileQuery,
-    CharacterProfileQueryVariables,
-    CharacterProfileProps<TChildProps, TDataName>
-  >(CharacterProfileDocument, {
-    alias: 'characterProfile',
-    ...operationOptions,
-  });
-}
-
-/**
- * __useCharacterProfileQuery__
- *
- * To run a query within a React component, call `useCharacterProfileQuery` and pass it any options that fit your needs.
- * When your component renders, `useCharacterProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCharacterProfileQuery({
- *   variables: {
- *      name: // value for 'name'
- *   },
- * });
- */
-export function useCharacterProfileQuery(
-  baseOptions?: ApolloReactHooks.QueryHookOptions<
-    CharacterProfileQuery,
-    CharacterProfileQueryVariables
-  >,
-) {
-  return ApolloReactHooks.useQuery<
-    CharacterProfileQuery,
-    CharacterProfileQueryVariables
-  >(CharacterProfileDocument, baseOptions);
-}
-export function useCharacterProfileLazyQuery(
-  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
-    CharacterProfileQuery,
-    CharacterProfileQueryVariables
-  >,
-) {
-  return ApolloReactHooks.useLazyQuery<
-    CharacterProfileQuery,
-    CharacterProfileQueryVariables
-  >(CharacterProfileDocument, baseOptions);
-}
-export type CharacterProfileQueryHookResult = ReturnType<
-  typeof useCharacterProfileQuery
->;
-export type CharacterProfileLazyQueryHookResult = ReturnType<
-  typeof useCharacterProfileLazyQuery
->;
-export type CharacterProfileQueryResult = ApolloReactCommon.QueryResult<
-  CharacterProfileQuery,
-  CharacterProfileQueryVariables
 >;
 export const StaticsDocument = gql`
   query Statics {
@@ -492,55 +334,6 @@ export const StaticsDocument = gql`
     }
   }
 `;
-export type StaticsComponentProps = Omit<
-  ApolloReactComponents.QueryComponentOptions<
-    StaticsQuery,
-    StaticsQueryVariables
-  >,
-  'query'
->;
-
-export const StaticsComponent: React.FC<StaticsComponentProps> = (
-  props: StaticsComponentProps,
-) => (
-  <ApolloReactComponents.Query<StaticsQuery, StaticsQueryVariables>
-    query={StaticsDocument}
-    {...props}
-  />
-);
-
-export type StaticsProps<
-  TChildProps = Record<string, unknown>,
-  TDataName extends string = 'data'
-> = {
-  [key in TDataName]: ApolloReactHoc.DataValue<
-    StaticsQuery,
-    StaticsQueryVariables
-  >;
-} &
-  TChildProps;
-export function withStatics<
-  TProps,
-  TChildProps = Record<string, unknown>,
-  TDataName extends string = 'data'
->(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    StaticsQuery,
-    StaticsQueryVariables,
-    StaticsProps<TChildProps, TDataName>
-  >,
-) {
-  return ApolloReactHoc.withQuery<
-    TProps,
-    StaticsQuery,
-    StaticsQueryVariables,
-    StaticsProps<TChildProps, TDataName>
-  >(StaticsDocument, {
-    alias: 'statics',
-    ...operationOptions,
-  });
-}
 
 /**
  * __useStaticsQuery__
@@ -558,30 +351,29 @@ export function withStatics<
  * });
  */
 export function useStaticsQuery(
-  baseOptions?: ApolloReactHooks.QueryHookOptions<
-    StaticsQuery,
-    StaticsQueryVariables
-  >,
+  baseOptions?: Apollo.QueryHookOptions<StaticsQuery, StaticsQueryVariables>,
 ) {
-  return ApolloReactHooks.useQuery<StaticsQuery, StaticsQueryVariables>(
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<StaticsQuery, StaticsQueryVariables>(
     StaticsDocument,
-    baseOptions,
+    options,
   );
 }
 export function useStaticsLazyQuery(
-  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+  baseOptions?: Apollo.LazyQueryHookOptions<
     StaticsQuery,
     StaticsQueryVariables
   >,
 ) {
-  return ApolloReactHooks.useLazyQuery<StaticsQuery, StaticsQueryVariables>(
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<StaticsQuery, StaticsQueryVariables>(
     StaticsDocument,
-    baseOptions,
+    options,
   );
 }
 export type StaticsQueryHookResult = ReturnType<typeof useStaticsQuery>;
 export type StaticsLazyQueryHookResult = ReturnType<typeof useStaticsLazyQuery>;
-export type StaticsQueryResult = ApolloReactCommon.QueryResult<
+export type StaticsQueryResult = Apollo.QueryResult<
   StaticsQuery,
   StaticsQueryVariables
 >;

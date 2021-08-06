@@ -5,6 +5,8 @@ interface Props {
   data: CharacterListQuery;
 }
 
+const API = 'https://rickandmortyapi.com/api';
+
 const CardProfile: React.FC<Props> = ({ data }: Props) => {
   const result = data?.characters?.results || [];
   try {
@@ -17,7 +19,7 @@ const CardProfile: React.FC<Props> = ({ data }: Props) => {
             </ImageWrapper>
             <ContentWrapper state={character?.status || ''}>
               <Section>
-                <a href={character?.name || ''}>
+                <a href={`${API}/character/${character?.id}` || ''}>
                   <h2>{character?.name || ''}</h2>
                 </a>
                 <span>
@@ -27,11 +29,19 @@ const CardProfile: React.FC<Props> = ({ data }: Props) => {
               </Section>
               <Section>
                 <span>Last known location:</span>
-                <a href="">{character?.location?.name || ''}</a>
+                <a href={`${API}/location/${character?.location}` || ''}>
+                  {character?.location?.name || ''}
+                </a>
               </Section>
               <Section>
                 <span>First seen in:</span>
-                <a href="">
+                <a
+                  href={
+                    character?.episode
+                      ? `${API}/episode/${character?.episode[0]?.id}`
+                      : ''
+                  }
+                >
                   {character?.episode ? character?.episode[0]?.name : ''}
                 </a>
               </Section>
