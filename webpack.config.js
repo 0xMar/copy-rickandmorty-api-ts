@@ -60,13 +60,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),
     }),
-    // new webpack.DllReferencePlugin({
-    //   manifest: require('./modules-manifest.json'),
-    // }),
-    // new AddAssetHtmlPlugin({
-    //   filepath: path.resolve(__dirname, 'dist/js/*.dll.js'),
-    //   outputPath: 'js',
-    //   publicPath: 'https://vigilant-lovelace-6f532b.netlify.app/js',
-    // }),
+    new webpack.DllReferencePlugin({
+      manifest: require('./modules-manifest.json'),
+    }),
+    new AddAssetHtmlPlugin({
+      filepath: path.resolve(__dirname, 'dist/js/*.dll.js'),
+      outputPath: 'js',
+      publicPath: 'https://vigilant-lovelace-6f532b.netlify.app/',
+    }),
   ],
 };
