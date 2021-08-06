@@ -57,12 +57,9 @@ module.exports = {
   },
   plugins: [
     // new BundleAnalyzerPlugin(),
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ['**/app.*'],
-    }),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'public/index.html'),
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: path.resolve(__dirname, 'public/index.html'),
+    // }),
     new webpack.DllReferencePlugin({
       manifest: require('./modules-manifest.json'),
     }),
