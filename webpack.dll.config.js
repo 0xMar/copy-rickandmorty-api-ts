@@ -5,7 +5,7 @@ const TersetJSPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: {
-    modules: ['react', 'react-dom', 'react-apollo-hooks'],
+    modules: ['react', 'react-dom'],
   },
   optimization: {
     minimize: true,
