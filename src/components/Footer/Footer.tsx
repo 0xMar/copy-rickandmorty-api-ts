@@ -33,7 +33,7 @@ const Footer: React.FC<Props> = ({ data }: Props) => (
     <List className="margin-top">
       <ListItem>
         <a
-          href="https://github.com/victormartinortiz"
+          href="https://github.com/0xMar"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Github"
@@ -53,7 +53,7 @@ const Footer: React.FC<Props> = ({ data }: Props) => (
       </ListItem>
       <ListItem>
         <a
-          href="https://twitter.com/OrtizVictorM"
+          href="https://twitter.com/0xMar_"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Twitter"
@@ -73,7 +73,7 @@ const Footer: React.FC<Props> = ({ data }: Props) => (
       </ListItem>
       <ListItem>
         <a
-          href="http://"
+          href="https://rickandmortyapi.com/help-us"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Help"
@@ -95,7 +95,7 @@ const Footer: React.FC<Props> = ({ data }: Props) => (
     <SignWrapper>
       <span>
         {'❮❯ by '}
-        <a href="/">Victor Ortiz</a>
+        <a href="https://github.com/0xMar">0xVic</a>
       </span>
       <span> 2020</span>
     </SignWrapper>
