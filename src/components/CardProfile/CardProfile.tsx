@@ -29,7 +29,7 @@ const CardProfile: React.FC<Props> = ({ data }: Props) => {
               </Section>
               <Section>
                 <span>Last known location:</span>
-                <a href={`${API}/location/${character?.location}` || ''}>
+                <a href={`${API}/location/${character?.location?.id}` || ''}>
                   {character?.location?.name || ''}
                 </a>
               </Section>

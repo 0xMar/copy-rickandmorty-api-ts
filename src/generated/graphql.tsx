@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
@@ -18,7 +17,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   /** The `Upload` scalar type represents a file upload. */
-  Upload: unknown;
+  Upload: any;
 };
 
 export enum CacheControlScope {
@@ -210,7 +209,7 @@ export type CharacterListQuery = { __typename?: 'Query' } & {
               'id' | 'name' | 'status' | 'species' | 'image'
             > & {
                 location?: Maybe<
-                  { __typename?: 'Location' } & Pick<Location, 'name'>
+                  { __typename?: 'Location' } & Pick<Location, 'id' | 'name'>
                 >;
                 episode: Array<
                   Maybe<
@@ -255,6 +254,7 @@ export const CharacterListDocument = gql`
         species
         image
         location {
+          id
           name
         }
         episode {

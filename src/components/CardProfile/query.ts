@@ -10,6 +10,7 @@ export const QUERY_CHARACTER_LIST = gql`
         species
         image
         location {
+          id
           name
         }
         episode {
