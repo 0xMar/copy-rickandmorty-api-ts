@@ -18,7 +18,7 @@ module.exports = {
   output: {
     filename: 'js/[name].[hash].js',
     chunkFilename: 'js/[id].[chunkhash].js',
-    publicPath: 'https://vigilant-lovelace-6f532b.netlify.app/',
+    publicPath: 'https://0xvic-copy-rickandmorty-api.netlify.app/',
     path: path.resolve(__dirname, 'dist'),
   },
   optimization: {
@@ -66,7 +66,7 @@ module.exports = {
     new AddAssetHtmlPlugin({
       filepath: path.resolve(__dirname, 'dist/js/*.dll.js'),
       outputPath: 'js',
-      publicPath: 'https://vigilant-lovelace-6f532b.netlify.app/js/',
+      publicPath: 'https://0xvic-copy-rickandmorty-api.netlify.app/js/',
     }),
   ],
 };
