@@ -23,7 +23,7 @@ const Header: React.FC = () => (
       <HeaderList>
         <li>
           <AnchorItem
-            href="https://0xvic-copy-rickandmorty-api.netlify.app"
+            href="https://rickandmortyapi.com/documentation/"
             className="nav-item__primary nav-item"
             aria-label="Docs"
           >
@@ -32,7 +32,7 @@ const Header: React.FC = () => (
         </li>
         <li>
           <AnchorItem
-            href="https://0xvic-copy-rickandmorty-api.netlify.app"
+            href="https://rickandmortyapi.com/about/"
             className="nav-item__primary nav-item"
             aria-label="About"
           >
@@ -41,11 +41,11 @@ const Header: React.FC = () => (
         </li>
         <li>
           <AnchorItem
-            href="https://0xvic-copy-rickandmorty-api.netlify.app"
+            href="https://rickandmortyapi.com/support-us"
             className="nav-item"
             aria-label="Help"
           >
-            <HeaderButton className="desktop nav-item">help us</HeaderButton>
+            <HeaderButton className="desktop nav-item">SUPPORT US</HeaderButton>
             <HeaderButtonMobile className="mobile nav-item">
               <svg
                 height="1em"
