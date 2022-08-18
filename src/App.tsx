@@ -12,12 +12,6 @@ const Container = styled.main`
 `;
 
 const App: React.FC = () => {
-  // const [searchInput, setSearchInput] = useState('');
-  // const handleInputChange = useCallback((name) => {
-  //   if (name.length > 3) {
-  //     setSearchInput(name);
-  //   }
-  // }, []);
   return (
     <>
       <GlobalStyle />
