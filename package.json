@@ -12,7 +12,8 @@
     "format": "prettier --config .prettierrc --write '{*.js,src/**/*.{js,jsx,ts,tsx}}'",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --no-error-on-unmatched-pattern --fix",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "prepare": "husky install"
   },
   "keywords": [
     "reactjs",
