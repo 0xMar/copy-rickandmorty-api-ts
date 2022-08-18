@@ -1,21 +1,24 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
   ApolloClient,
   InMemoryCache,
   NormalizedCacheObject,
+  ApolloProvider,
 } from '@apollo/client';
-import { ApolloProvider } from '@apollo/client';
 import App from './App';
+
+const container = document.getElementById('app');
+
+const root = createRoot(container!);
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   uri: 'https://rickandmortyapi.com/graphql',
   cache: new InMemoryCache(),
 });
 
-render(
+root.render(
   <ApolloProvider client={client}>
     <App />
   </ApolloProvider>,
-  document.getElementById('app'),
 );
